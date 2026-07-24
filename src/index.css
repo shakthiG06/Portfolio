@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Resets ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  @apply font-inter text-text-primary bg-bg-primary;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+body.dark {
+  @apply bg-bg-dark text-text-darkPrimary;
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F8FAFF; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3B82F6, #1E40AF);
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-track { background: #0A0F1E; }
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: rgba(59,130,246,0.3);
+  color: #1E293B;
+}
+
+/* ─── Glass Utilities ────────────────────────────────────────── */
+@layer utilities {
+  .glass {
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .glass-dark {
+    background: rgba(10,15,30,0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(59,130,246,0.12);
+  }
+  .glass-blue {
+    background: rgba(59,130,246,0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(59,130,246,0.15);
+  }
+  .glow-blue {
+    box-shadow: 0 0 30px rgba(59,130,246,0.4);
+  }
+  .glow-blue-lg {
+    box-shadow: 0 0 60px rgba(59,130,246,0.5), 0 0 120px rgba(59,130,246,0.2);
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #3B82F6, #60A5FA, #1E40AF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient-royal {
+    background: linear-gradient(135deg, #1E40AF, #3B82F6, #60A5FA);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .bg-gradient-animated {
+    background: linear-gradient(270deg, #3B82F6, #60A5FA, #1E40AF, #D4A853);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+  }
+  .shimmer-text {
+    background: linear-gradient(90deg, #3B82F6 0%, #60A5FA 25%, #D4A853 50%, #60A5FA 75%, #3B82F6 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+  .section-padding {
+    @apply py-20 px-6 md:px-12 lg:px-24;
+  }
+  .hide-cursor { cursor: none; }
+}
+
+/* ─── Loading Screen ─────────────────────────────────────────── */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #F8FAFF 0%, #EEF2FF 50%, #DBEAFE 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark .loading-screen {
+  background: linear-gradient(135deg, #0A0F1E 0%, #111827 50%, #0c1333 100%);
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: #3B82F6;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(59,130,246,0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+}
+
+.cursor-ring.hover {
+  width: 56px;
+  height: 56px;
+  background: rgba(59,130,246,0.08);
+}
+
+/* ─── Scroll Progress ────────────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3B82F6, #60A5FA, #D4A853);
+  z-index: 9997;
+  transform-origin: left;
+}
+
+/* ─── Floating Particles ─────────────────────────────────────── */
+.particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1rem;
+  animation: particleFall linear infinite;
+  opacity: 0.7;
+}
+
+/* ─── Section Headings ───────────────────────────────────────── */
+.section-tag {
+  @apply font-cormorant text-blue-primary text-sm tracking-[0.3em] uppercase;
+}
+
+.section-title {
+  @apply font-playfair text-4xl md:text-5xl font-bold text-text-primary;
+}
+
+.dark .section-title {
+  @apply text-text-darkPrimary;
+}
+
+/* ─── Timeline ───────────────────────────────────────────────── */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, #3B82F6, #60A5FA, #3B82F6, transparent);
+  transform: translateX(-50%);
+}
+
+/* ─── Hover Tilt Effect ──────────────────────────────────────── */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+}
+
+/* ─── Skill Tag ──────────────────────────────────────────────── */
+.skill-tag {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium font-inter;
+  @apply glass border border-blue-primary/20 text-text-primary;
+  @apply hover:border-blue-primary/50 hover:shadow-glow-blue transition-all duration-300;
+  @apply hover:-translate-y-0.5;
+}
+
+.dark .skill-tag {
+  @apply text-text-darkPrimary border-blue-primary/30 hover:border-blue-primary/60;
+}
+
+/* ─── Project Card ───────────────────────────────────────────── */
+.project-card {
+  @apply glass rounded-2xl overflow-hidden transition-all duration-500;
+  @apply hover:shadow-glow-blue hover:-translate-y-2;
+}
+
+.dark .project-card {
+  @apply glass-dark;
+}
+
+/* ─── Form Input ─────────────────────────────────────────────── */
+.form-input {
+  @apply w-full px-5 py-4 rounded-xl glass border border-blue-primary/20 outline-none;
+  @apply font-inter text-text-primary placeholder-text-secondary/60;
+  @apply focus:border-blue-primary/60 focus:ring-2 focus:ring-blue-primary/20;
+  @apply transition-all duration-300;
+}
+
+.dark .form-input {
+  @apply glass-dark text-text-darkPrimary placeholder-text-darkSecondary/60;
+  @apply focus:border-blue-primary/50;
+}
+
+/* ─── Gradient BG animation ──────────────────────────────────── */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes particleFall {
+  0% { transform: translateY(-100px) translateX(0) rotate(0deg); opacity: 0.8; }
+  25% { transform: translateY(25vh) translateX(30px) rotate(180deg); }
+  50% { transform: translateY(50vh) translateX(-20px) rotate(360deg); }
+  75% { transform: translateY(75vh) translateX(40px) rotate(540deg); opacity: 0.4; }
+  100% { transform: translateY(105vh) translateX(0) rotate(720deg); opacity: 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59,130,246,0.3), 0 0 40px rgba(59,130,246,0.1); }
+  50% { box-shadow: 0 0 50px rgba(59,130,246,0.7), 0 0 80px rgba(59,130,246,0.3); }
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
