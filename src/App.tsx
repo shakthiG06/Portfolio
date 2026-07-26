@@ -8,7 +8,7 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 
 // UI Effects
-import LoadingScreen, { CustomCursor, ScrollProgress, FloatingPetals } from './components/ui/Effects'
+import LoadingScreen, { CustomCursor, ScrollProgress, StarField, FilmGrain } from './components/ui/Effects'
 
 // Sections
 import Hero from './components/sections/Hero'
@@ -28,7 +28,7 @@ const HomePage: React.FC = () => {
   useLenis()
 
   return (
-    <main>
+    <main className="relative z-10">
       <Hero />
       <About />
       <Journey />
@@ -52,17 +52,20 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <BrowserRouter>
-        {/* Custom Cursor */}
+        {/* Custom Glowing Cursor */}
         <CustomCursor />
 
         {/* Scroll Progress Bar */}
         <ScrollProgress />
 
-        {/* Loading Screen */}
-        {!loaded && <LoadingScreen onComplete={handleLoadComplete} />}
+        {/* Cinematic Film Grain & Scanline Overlay */}
+        <FilmGrain />
 
-        {/* Floating Petals (always present, behind content) */}
-        <FloatingPetals count={12} />
+        {/* Animated Starfield Background */}
+        <StarField count={40} />
+
+        {/* Cinematic Boot Loading Screen */}
+        {!loaded && <LoadingScreen onComplete={handleLoadComplete} />}
 
         {loaded && (
           <>

@@ -9,7 +9,7 @@ const roles = [
   'Artificial Intelligence Engineer',
   'Data Scientist & Analyst',
   'Full Stack Software Developer',
-  'Data Analyst & AI Specialist',
+  'Cloud & ML System Architect',
 ]
 
 const socials = [
@@ -175,7 +175,7 @@ const Hero: React.FC = () => {
               >
                 Transforming complex data patterns into high-impact digital experiences through{' '}
                 <span className="text-[#00CFFF] font-semibold">Artificial Intelligence</span>,{' '}
-                <span className="text-[#FFD166] font-semibold">Full Stack Architecture</span>, and data analytics.
+                <span className="text-[#FFD166] font-semibold">Full Stack Architecture</span>, and scalable cloud engineering.
               </motion.p>
 
               {/* Location */}

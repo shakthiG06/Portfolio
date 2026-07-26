@@ -3,74 +3,78 @@ import { motion } from 'framer-motion'
 import { ExternalLink, Code2 } from 'lucide-react'
 import { SiGithub } from 'react-icons/si'
 import { projects } from '../../data/projects'
-import { useTheme } from '../../context/ThemeContext'
+
+const statusBadgeStyles: Record<string, string> = {
+  SUCCESS: 'bg-emerald-950/80 text-emerald-400 border-emerald-500/40 shadow-[0_0_12px_rgba(52,211,153,0.3)]',
+  DEPLOYED: 'bg-[#00CFFF]/15 text-[#00CFFF] border-[#00CFFF]/40 shadow-[0_0_12px_rgba(0,207,255,0.3)]',
+  COMPLETED: 'bg-[#FFD166]/15 text-[#FFD166] border-[#FFD166]/40 shadow-[0_0_12px_rgba(255,209,102,0.3)]',
+  ACTIVE: 'bg-[#E11D48]/15 text-[#E11D48] border-[#E11D48]/40 shadow-[0_0_12px_rgba(225,29,72,0.3)]',
+}
 
 const ProjectCard: React.FC<{ project: typeof projects[0]; index: number }> = ({ project, index }) => {
-  const { isDark } = useTheme()
   const [hovered, setHovered] = useState(false)
 
   return (
     <motion.div
-      className={`project-card ${isDark ? 'glass-dark' : 'glass'} rounded-3xl overflow-hidden group flex flex-col justify-between`}
+      className="bg-[#080d1a] border border-[#00CFFF]/25 hover:border-[#E11D48]/60 rounded-2xl overflow-hidden group flex flex-col justify-between hud-border transition-all duration-300"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.7, delay: index * 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      whileHover={{ y: -8 }}
+      whileHover={{ y: -6 }}
     >
       <div>
-        {/* Top gradient banner */}
-        <div className={`h-44 bg-gradient-to-br ${project.color} relative overflow-hidden flex items-center justify-center`}>
-          {/* Grid pattern */}
+        {/* Top Mission Header Banner */}
+        <div className="h-40 bg-[#050914] relative overflow-hidden flex items-center justify-center border-b border-[#00CFFF]/20">
+          {/* Tech Grid Background */}
           <div
-            className="absolute inset-0 opacity-20"
+            className="absolute inset-0 opacity-15"
             style={{
-              backgroundImage: 'linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)',
-              backgroundSize: '30px 30px',
+              backgroundImage: 'linear-gradient(rgba(0,207,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,207,255,0.5) 1px, transparent 1px)',
+              backgroundSize: '24px 24px',
             }}
           />
 
+          {/* Operation Name Tag — Top Left */}
+          <div className="absolute top-3 left-3 font-mono text-[11px] font-bold text-[#00CFFF] bg-[#081020] px-2.5 py-1 rounded border border-[#00CFFF]/30">
+            {project.operationName.toUpperCase()}
+          </div>
+
+          {/* Status Badge — Top Right */}
+          <div className={`absolute top-3 right-3 font-mono text-[10px] font-black px-2.5 py-0.5 rounded border uppercase tracking-wider ${statusBadgeStyles[project.missionStatus]}`}>
+            STATUS: {project.missionStatus}
+          </div>
+
           {/* Project icon */}
           <motion.div
-            className="relative z-10 w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-3xl shadow-lg"
-            animate={hovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+            className="relative z-10 w-16 h-16 rounded-xl bg-[#081020] border border-[#00CFFF]/50 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(0,207,255,0.4)] text-white"
+            animate={hovered ? { scale: 1.1, rotate: 3 } : { scale: 1, rotate: 0 }}
             transition={{ duration: 0.3 }}
           >
             {project.icon}
           </motion.div>
-
-          {/* Featured badge */}
-          {project.featured && (
-            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
-              <span className="font-inter text-xs text-white font-semibold">Featured</span>
-            </div>
-          )}
-
-          {/* Shimmer on hover */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-            animate={hovered ? { x: ['−100%', '200%'] } : { x: '-100%' }}
-            transition={{ duration: 0.6 }}
-          />
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <h3 className={`font-playfair text-xl font-bold mb-2.5 ${isDark ? 'text-text-darkPrimary' : 'text-text-primary'}`}>
-            {project.title}
-          </h3>
-          <p className={`font-inter text-sm leading-relaxed mb-4 ${isDark ? 'text-text-darkSecondary' : 'text-text-secondary'}`}>
+        <div className="p-6 space-y-3 font-mono">
+          <div className="flex items-center justify-between">
+            <h3 className="font-outfit text-xl font-bold text-white tracking-wide group-hover:text-[#00CFFF] transition-colors">
+              {project.title}
+            </h3>
+          </div>
+
+          <p className="font-inter text-xs leading-relaxed text-slate-300">
             {project.description}
           </p>
 
-          {/* Tech badges */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          {/* Tech stack badges */}
+          <div className="flex flex-wrap gap-1.5 pt-2">
             {project.tech.map(tech => (
               <span
                 key={tech}
-                className="px-3 py-1 rounded-full text-xs font-inter font-medium bg-blue-primary/10 text-blue-primary border border-blue-primary/20"
+                className="px-2.5 py-0.5 rounded bg-[#050914] text-[10px] font-mono text-[#00CFFF] border border-[#00CFFF]/20"
               >
                 {tech}
               </span>
@@ -80,32 +84,28 @@ const ProjectCard: React.FC<{ project: typeof projects[0]; index: number }> = ({
       </div>
 
       {/* Buttons */}
-      <div className="px-6 pb-6 pt-0 flex gap-3">
+      <div className="p-6 pt-0 flex gap-3 font-mono text-xs">
         <motion.a
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border font-inter text-sm font-medium transition-all duration-300
-            ${isDark
-              ? 'border-blue-primary/20 text-text-darkSecondary hover:border-blue-primary/50 hover:text-blue-primary'
-              : 'border-blue-primary/20 text-text-secondary hover:border-blue-primary/50 hover:text-blue-primary'
-            }`}
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-[#00CFFF]/30 text-slate-300 hover:border-[#00CFFF] hover:text-[#00CFFF] font-bold transition-all bg-[#050914]"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <SiGithub size={15} />
-          GitHub
+          <SiGithub size={14} />
+          [ CODE ]
         </motion.a>
         <motion.a
           href={project.demo}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-blue text-white font-inter text-sm font-medium shadow-glow-blue"
-          whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(59,130,246,0.5)' }}
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-[#E11D48] text-white font-bold shadow-[0_0_15px_rgba(225,29,72,0.4)] hover:shadow-[0_0_25px_rgba(225,29,72,0.7)] transition-all"
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <ExternalLink size={15} />
-          Live Demo
+          <ExternalLink size={14} />
+          [ LAUNCH ]
         </motion.a>
       </div>
     </motion.div>
@@ -113,62 +113,59 @@ const ProjectCard: React.FC<{ project: typeof projects[0]; index: number }> = ({
 }
 
 const Projects: React.FC = () => {
-  const { isDark } = useTheme()
-
   return (
-    <section id="projects" className={`section-padding ${isDark ? 'bg-bg-dark' : 'bg-bg-primary'}`}>
-      <div className="max-w-7xl mx-auto">
+    <section id="projects" className="section-padding bg-[#050505] relative overflow-hidden">
+      {/* Ambient background */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#00CFFF]/8 blur-[150px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 space-y-2">
           <motion.p
-            className="section-tag mb-3"
+            className="section-tag"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           >
-            What I've Built
+            ACTIVE OPERATIONS & PROJECTS
           </motion.p>
           <motion.h2
             className="section-title"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
           >
-            Featured <span className="text-gradient">Projects</span>
+            MISSION <span className="text-gradient">CONTROL</span>
           </motion.h2>
           <motion.p
-            className={`font-inter text-base mt-4 max-w-xl mx-auto ${isDark ? 'text-text-darkSecondary' : 'text-text-secondary'}`}
+            className="font-mono text-xs sm:text-sm mt-2 max-w-xl mx-auto text-slate-400 uppercase tracking-wider"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
           >
-            A showcase of real-world AI systems, full-stack applications, and data platforms.
+            Tactical deployment of AI platforms, full-stack software, and data pipelines
           </motion.p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
         </div>
 
-        {/* GitHub CTA */}
+        {/* GitHub Terminal CTA */}
         <motion.div
-          className="text-center mt-16"
+          className="text-center mt-16 font-mono"
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         >
-          <p className={`font-inter text-sm mb-4 ${isDark ? 'text-text-darkSecondary' : 'text-text-secondary'}`}>
-            Want to explore more code repositories? Check out my GitHub profile.
+          <p className="text-xs text-slate-400 mb-4 uppercase tracking-widest">
+            NEED ACCESS TO ADDITIONAL CODE REPOSITORIES?
           </p>
           <motion.a
-            href="https://github.com/shakthig"
+            href="https://github.com/shakthiG06"
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 px-8 py-4 rounded-2xl border font-inter font-semibold text-sm transition-all duration-300
-              ${isDark
-                ? 'glass-dark border-blue-primary/20 text-text-darkPrimary hover:text-blue-primary hover:border-blue-primary/50'
-                : 'glass border-blue-primary/20 text-text-primary hover:text-blue-primary hover:border-blue-primary/50'
-              }`}
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-lg bg-[#080d1a] border border-[#00CFFF]/40 text-[#00CFFF] font-bold text-xs uppercase tracking-widest hover:border-[#E11D48] hover:text-[#E11D48] shadow-[0_0_20px_rgba(0,207,255,0.2)] transition-all"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
           >
-            <Code2 size={18} />
-            View All on GitHub →
+            <Code2 size={16} />
+            [ ACCESS GITHUB REPOSITORY TERMINAL ] →
           </motion.a>
         </motion.div>
       </div>

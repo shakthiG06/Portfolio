@@ -1,58 +1,81 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Mail, ArrowUp, Heart } from 'lucide-react'
+import { Mail, ArrowUp, ShieldCheck } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa6'
 import { SiLeetcode } from 'react-icons/si'
-import { useTheme } from '../../context/ThemeContext'
 
 const quickLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Headquarters', href: '#home' },
+  { label: 'Recruit Profile', href: '#about' },
+  { label: 'Missions', href: '#projects' },
+  { label: 'Arsenal', href: '#skills' },
+  { label: 'Achievements', href: '#experience' },
+  { label: 'Communication', href: '#contact' },
 ]
 
 const socials = [
-  { icon: FaGithub, href: 'https://github.com/shakthig', label: 'GitHub' },
-  { icon: FaLinkedin, href: 'https://linkedin.com/in/shakthig', label: 'LinkedIn' },
+  { icon: FaGithub, href: 'https://github.com/shakthiG06', label: 'GitHub' },
+  { icon: FaLinkedin, href: 'https://www.linkedin.com/in/shakthi-g-6633ab315/', label: 'LinkedIn' },
   { icon: SiLeetcode, href: 'https://leetcode.com/u/ShakthiGuru/', label: 'LeetCode' },
   { icon: Mail, href: 'mailto:shakthi6731@gmail.com', label: 'Email' },
 ]
 
 const Footer: React.FC = () => {
-  const { isDark } = useTheme()
-
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    <footer className={`relative pt-20 pb-8 px-6 md:px-12 lg:px-24 overflow-hidden
-      ${isDark ? 'bg-bg-darkSecondary' : 'bg-bg-secondary'}`}>
-      {/* Gradient top border */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-blue opacity-30" />
+    <footer className="relative pt-16 pb-12 px-6 md:px-12 lg:px-24 bg-[#03050a] overflow-hidden border-t border-[#00CFFF]/20 font-mono">
+      {/* Accent gradient line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#E11D48] via-[#FFD166] to-[#00CFFF]" />
 
-      {/* Decorative blobs */}
-      <div className="absolute top-0 left-1/4 w-72 h-72 rounded-full bg-blue-primary/5 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-72 h-72 rounded-full bg-blue-accent/10 blur-3xl pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          {/* Brand */}
-          <div className="space-y-4">
-            <motion.h3
-              className="font-playfair text-4xl font-bold text-gradient"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* FINAL SCENE BANNER */}
+        <motion.div
+          className="mb-16 p-8 rounded-2xl bg-[#080d1a] border border-[#E11D48]/40 text-center space-y-3 hud-border"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className="text-xs font-bold text-[#E11D48] tracking-[0.3em] uppercase">
+            MISSION COMPLETE
+          </span>
+          <h3 className="font-outfit text-2xl sm:text-3xl font-extrabold text-white">
+            Thank you for accessing <span className="text-gradient">The Initiative.</span>
+          </h3>
+          <p className="text-xs text-slate-400">
+            The next mission starts now.
+          </p>
+          <div className="pt-2">
+            <motion.a
+              href="#contact"
+              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-[#E11D48] text-white font-bold text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(225,29,72,0.6)]"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
             >
-              Shakthi G
-            </motion.h3>
-            <p className={`font-inter text-sm leading-relaxed ${isDark ? 'text-text-darkSecondary' : 'text-text-secondary'}`}>
-              AI & Data Science Student · Full Stack Developer · Building intelligent, performant digital experiences.
+              <ShieldCheck size={16} />
+              [ RECRUIT ME ]
+            </motion.a>
+          </div>
+        </motion.div>
+
+        {/* Footer Navigation Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12 text-xs">
+          
+          {/* Brand */}
+          <div className="space-y-3">
+            <h3 className="font-outfit text-xl font-black text-white tracking-widest">
+              THE INITIATIVE
+            </h3>
+            <p className="text-[#00CFFF] text-xs font-bold">
+              Recruit ID: SG-2028 · Shakthi G
             </p>
-            {/* Social icons */}
-            <div className="flex items-center gap-3 pt-2">
+            <p className="text-slate-400 text-[11px] leading-relaxed max-w-sm font-inter">
+              B.Tech Artificial Intelligence & Data Science · AI Engineer & Full Stack Developer. Building intelligent solutions to solve world-scale problems.
+            </p>
+
+            <div className="flex items-center gap-2.5 pt-1">
               {socials.map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}
@@ -60,13 +83,11 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300
-                    ${isDark ? 'bg-blue-primary/10 text-text-darkSecondary hover:bg-blue-primary/20 hover:text-blue-primary'
-                      : 'bg-blue-primary/10 text-text-secondary hover:bg-blue-primary/20 hover:text-blue-primary'}`}
+                  className="w-8 h-8 rounded-lg bg-[#080d1a] border border-[#00CFFF]/30 text-slate-300 hover:text-[#00CFFF] hover:border-[#00CFFF] flex items-center justify-center transition-all"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Icon size={16} />
+                  <Icon size={14} />
                 </motion.a>
               ))}
             </div>
@@ -74,19 +95,18 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className={`font-playfair text-lg font-semibold mb-4 ${isDark ? 'text-text-darkPrimary' : 'text-text-primary'}`}>
-              Quick Links
+            <h4 className="font-outfit text-sm font-bold uppercase tracking-wider text-[#FFD166] mb-3">
+              Initiative Navigation
             </h4>
             <div className="flex flex-col gap-2">
               {quickLinks.map(link => (
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  className={`font-inter text-sm transition-colors duration-200 w-fit
-                    ${isDark ? 'text-text-darkSecondary hover:text-blue-primary' : 'text-text-secondary hover:text-blue-primary'}`}
+                  className="text-slate-300 hover:text-[#00CFFF] transition-colors w-fit text-xs"
                   whileHover={{ x: 4 }}
                 >
-                  {link.label}
+                  ▶ {link.label}
                 </motion.a>
               ))}
             </div>
@@ -94,67 +114,52 @@ const Footer: React.FC = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className={`font-playfair text-lg font-semibold mb-4 ${isDark ? 'text-text-darkPrimary' : 'text-text-primary'}`}>
-              Get In Touch
+            <h4 className="font-outfit text-sm font-bold uppercase tracking-wider text-[#FFD166] mb-3">
+              Base Location & Comms
             </h4>
-            <div className="space-y-3">
-              <p className={`font-inter text-sm ${isDark ? 'text-text-darkSecondary' : 'text-text-secondary'}`}>
-                📍 Coimbatore, Tamil Nadu, India
+            <div className="space-y-2 text-xs">
+              <p className="text-slate-300">
+                <span className="text-[#E11D48]">📍</span> Base: Tamil Nadu, India
               </p>
               <a
                 href="mailto:shakthi6731@gmail.com"
-                className="font-inter text-sm text-blue-primary hover:text-blue-accent transition-colors"
+                className="text-[#00CFFF] hover:text-white transition-colors block font-bold"
               >
-                ✉️ shakthi6731@gmail.com
+                <span className="text-[#00CFFF]">✉️</span> shakthi6731@gmail.com
               </a>
-              <p className={`font-inter text-sm ${isDark ? 'text-text-darkSecondary' : 'text-text-secondary'}`}>
-                🎓 KGiSL Institute of Technology
+              <p className="text-slate-300">
+                <span className="text-[#FFD166]">🎓</span> KGiSL Institute of Technology
               </p>
-              <div className="flex items-center gap-2 mt-4">
+              <div className="flex items-center gap-2 mt-3 pt-2 border-t border-[#00CFFF]/15">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-inter text-sm text-emerald-500">Open to Opportunities</span>
+                <span className="text-[11px] text-emerald-400 font-bold uppercase">Candidate Clearance: Active</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className={`pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4
-          ${isDark ? 'border-blue-primary/10' : 'border-blue-primary/15'}`}>
-          <motion.p
-            className={`font-inter text-sm flex items-center gap-1.5 ${isDark ? 'text-text-darkSecondary' : 'text-text-secondary'}`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            Designed & Developed with
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <Heart size={14} className="text-blue-primary fill-blue-primary" />
-            </motion.span>
-            by <span className="text-gradient font-semibold ml-1">Shakthi G</span>
-          </motion.p>
+        <div className="pt-6 border-t border-[#00CFFF]/15 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
+          <p>
+            THE INITIATIVE COMMAND CENTER · RECRUIT PORTFOLIO
+          </p>
 
-          <p className={`font-mono text-xs ${isDark ? 'text-text-darkSecondary/60' : 'text-text-secondary/60'}`}>
-            © {new Date().getFullYear()} · All Rights Reserved
+          <p>
+            © {new Date().getFullYear()} Shakthi G. All Rights Reserved.
           </p>
         </div>
       </div>
 
-      {/* Back to top */}
+      {/* Back to top button */}
       <motion.button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-8 w-12 h-12 rounded-2xl bg-gradient-blue text-white flex items-center justify-center shadow-glow-blue z-40"
-        whileHover={{ scale: 1.1, y: -2 }}
+        className="fixed bottom-6 right-6 px-4 py-2.5 rounded-lg bg-[#080d1a] border border-[#00CFFF]/50 text-[#00CFFF] font-bold text-xs uppercase tracking-widest flex items-center gap-2 shadow-[0_0_20px_rgba(0,207,255,0.3)] z-40"
+        whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
         aria-label="Back to top"
       >
-        <ArrowUp size={20} />
+        <ArrowUp size={14} />
+        [ HQ ]
       </motion.button>
     </footer>
   )
